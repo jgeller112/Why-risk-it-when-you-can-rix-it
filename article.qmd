@@ -87,7 +87,7 @@ How about:
 
 **\[Beyond traditional package management, Nix provides advantages relative to tools that many psychologists already use. For example, renv can lock R packages to specific versions, but it cannot manage system libraries (e.g., libcurl, libxml), compilers, Python dependencies, or OS-level configuration. As a result, renv environments may still fail to reproduce analyses on machines with different operating systems or different versions of system libraries. Docker, by contrast, captures the entire operating system and therefore achieves strong reproducibility, but at the cost of heavy, opaque images that are difficult to inspect and slow to build. Docker also lacks built-in mechanisms for expressing environments declaratively: users must manually manage Dockerfiles and ensure version consistency.\]**
 
-**\[Nix effectively bridges these two approaches. Like renv, it provides transparent, language-level package version control; like Docker, it guarantees fully reproducible system environments. But Nix does so *without* requiring full OS images: environments are lightweight, composable, and defined by a single declarative file. This combination—precise version locking, complete control over system dependencies, and portable, declarative specifications—makes Nix particularly well suited for computational psychology workflows, especially those involving simulation code, R and Python interoperability, and long-term reproducibility of manuscripts\]**
+**\[Nix effectively bridges these two approaches. Like {renv}, it provides transparent, language-level package version control; like Docker, it guarantees fully reproducible system environments. But Nix does so *without* requiring full OS images: environments are lightweight, composable, and defined by a single declarative file. This combination—precise version locking, complete control over system dependencies, and portable, declarative specifications—makes Nix particularly well suited for computational psychology workflows, especially those involving simulation code, R and Python interoperability, and long-term reproducibility of manuscripts\]**
 
 \[maybe a bit more about nix\]
 
@@ -416,13 +416,15 @@ This command executes all code chunks in the manuscript, incorporates results an
 To download this extension for your own work you can install the extension by using the terminal:
 
 ```{base}
+#| eval: false
+
 quarto use template wjschne/apaquarto
 ```
 
 or in the console:
 
 ```{bash}
-
+#| eval: false
 quarto::quarto_use_template("wjschne/apaquarto")
 
 ```
