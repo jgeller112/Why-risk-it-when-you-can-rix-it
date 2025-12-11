@@ -284,10 +284,18 @@ For our simulation study, we implement the following environment specification, 
 #library(rix)
 rix(
   date = "2025-08-25",
-  r_pkgs = c("rix", "quarto", "knitr", 
-             "marginaleffects", "simhelpers", "ggplot2",
-             "doParallel", "doRNG", "cowplot",
-             "dplyr"),
+  r_pkgs = c(
+    "rix",
+    "quarto",
+    "knitr",
+    "marginaleffects",
+    "simhelpers",
+    "ggplot2",
+    "doParallel",
+    "doRNG",
+    "cowplot",
+    "dplyr"
+  ),
   system_pkgs = c("quarto"),
   ide = "rstudio",
   project_path = ".",
@@ -369,8 +377,11 @@ Sep out packages from code. This is a sep step.
 
 ```{r}
 # required packages
-library(marginaleffects); library(simhelpers)
-library(doParallel); library(doRNG); library(ggplot2)
+library(marginaleffects)
+library(simhelpers)
+library(doParallel)
+library(doRNG)
+library(ggplot2)
 ```
 
 \[Maybe have each of these steps in sep chunks with explanation of what they do under each and corresponding plots?\]
@@ -449,57 +460,69 @@ summary_table <- readRDS("Simulation_Scripts/performance_summary.rds")
 #| warning: false
 
 # aanel A: Relative Bias
-p_rel_bias <- ggplot(summary_table,
-                     aes(x = n, y = rel_bias,
-                         color = confound_label, group = confound_label)) +
+p_rel_bias <- ggplot(
+  summary_table,
+  aes(x = n, y = rel_bias, color = confound_label, group = confound_label)
+) +
   geom_hline(yintercept = 1, linetype = "dashed", color = "gray50") +
   geom_point(size = 3) +
   geom_line() +
-  labs(x = "Sample size (n)",
-       y = "Relative Bias",
-       color = "Confounding\nnon-linearity",
-       title = "A. Relative Bias") +
+  labs(
+    x = "Sample size (n)",
+    y = "Relative Bias",
+    color = "Confounding\nnon-linearity",
+    title = "A. Relative Bias"
+  ) +
   theme_minimal() +
   theme(legend.position = "none")
 
 # panel B: Relative RMSE
-p_rel_rmse <- ggplot(summary_table,
-                     aes(x = n, y = rel_rmse,
-                         color = confound_label, group = confound_label)) +
+p_rel_rmse <- ggplot(
+  summary_table,
+  aes(x = n, y = rel_rmse, color = confound_label, group = confound_label)
+) +
   geom_point(size = 3) +
   geom_line() +
-  labs(x = "Sample size (n)",
-       y = "Relative RMSE",
-       color = "Confounding\nnon-linearity",
-       title = "B. Relative RMSE") +
+  labs(
+    x = "Sample size (n)",
+    y = "Relative RMSE",
+    color = "Confounding\nnon-linearity",
+    title = "B. Relative RMSE"
+  ) +
   theme_minimal() +
   theme(legend.position = "none")
 
 # panel C: Coverage
-p_coverage <- ggplot(summary_table,
-                     aes(x = n, y = coverage,
-                         color = confound_label, group = confound_label)) +
+p_coverage <- ggplot(
+  summary_table,
+  aes(x = n, y = coverage, color = confound_label, group = confound_label)
+) +
   geom_hline(yintercept = 0.95, linetype = "dashed", color = "gray50") +
   geom_point(size = 3) +
   geom_line() +
-  labs(x = "Sample size (n)",
-       y = "Coverage of 95% CI",
-       color = "Confounding\nnon-linearity",
-       title = "C. Coverage Probability") +
+  labs(
+    x = "Sample size (n)",
+    y = "Coverage of 95% CI",
+    color = "Confounding\nnon-linearity",
+    title = "C. Coverage Probability"
+  ) +
   coord_cartesian(ylim = c(0, 1)) +
   theme_minimal() +
   theme(legend.position = "none")
 
 # panel D: CI Width
-p_width <- ggplot(summary_table,
-                  aes(x = n, y = width,
-                      color = confound_label, group = confound_label)) +
+p_width <- ggplot(
+  summary_table,
+  aes(x = n, y = width, color = confound_label, group = confound_label)
+) +
   geom_point(size = 3) +
   geom_line() +
-  labs(x = "Sample size (n)",
-       y = "Average CI Width",
-       color = "Confounding\nnon-linearity",
-       title = "D. Confidence Interval Width") +
+  labs(
+    x = "Sample size (n)",
+    y = "Average CI Width",
+    color = "Confounding\nnon-linearity",
+    title = "D. Confidence Interval Width"
+  ) +
   theme_minimal() +
   theme(legend.position = "none")
 
@@ -507,10 +530,9 @@ legend <- get_legend(
   p_rel_bias + theme(legend.position = "right")
 )
 
-# 2x2 grid 
+# 2x2 grid
 plot_grid(
-  plot_grid(p_rel_bias, p_rel_rmse, p_coverage, p_width, 
-            ncol = 2, nrow = 2),
+  plot_grid(p_rel_bias, p_rel_rmse, p_coverage, p_width, ncol = 2, nrow = 2),
   legend,
   rel_widths = c(3, 0.4)
 )
@@ -531,8 +553,14 @@ results_display <- summary_table %>%
     `Coverage` = sprintf("%.3f", coverage),
     `CI Width` = sprintf("%.3f", width)
   ) %>%
-  select(`Sample Size`, `Confounding`, `Relative Bias`, 
-         `Relative RMSE`, `Coverage`, `CI Width`)
+  select(
+    `Sample Size`,
+    `Confounding`,
+    `Relative Bias`,
+    `Relative RMSE`,
+    `Coverage`,
+    `CI Width`
+  )
 
 kable(results_display, align = "lccccc", row.names = FALSE)
 ```
